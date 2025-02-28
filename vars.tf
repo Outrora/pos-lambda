@@ -22,3 +22,7 @@ variable "policyArn" {
 variable "NOME" {}
 
 variable "TAGS" {}
+
+variable "DB_USER" {}
+
+variable "DB_PASSWORD" {}

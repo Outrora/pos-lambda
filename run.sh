@@ -21,7 +21,7 @@ rodarProjeto() {
     terraform init 
 
     echo "Aplicando o Terraform..."
-    terraform apply -var="TAGS=pos-lachonete" -var="NOME=pos-lanchonete" -auto-approve
+    terraform apply -var="TAGS=lachonete" -var="NOME=lanchonete" -var="DB_USER=test"  -var="DB_PASSWORD=test" -auto-approve
 }
 
 
