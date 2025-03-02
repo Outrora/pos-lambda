@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken")
 const {Client} = require("pg")
 
-const SECRET_KEY = "minha_senha_super_secreta";
+const SECRET_KEY = process.env.SECRET_KEY;
 
 const generateToken = (user) => {
   return jwt.sign({id : user.id, cpf: user.cpf},SECRET_KEY,{expiresIn: "1h", algorithm: "HS256"})
@@ -12,14 +12,15 @@ const dbConfig = {
   host : process.env.DB_HOST,
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
-  port: 5432
+  port: 5432,
+  ssl: { rejectUnauthorized: false }
 }
 
 exports.handler = async (event) => {
   const client = new Client(dbConfig)
 
   try {
-      const body = event.body ? JSON.parse(event.body) : {};
+      const body = JSON.parse(event.body || "{}");
       if (!body.cpf) {
         return { statusCode: 400, body: JSON.stringify({ message: "CPF é obrigatório" }) };
       }

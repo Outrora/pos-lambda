@@ -9,7 +9,7 @@ resource "aws_lambda_function" "usuario_api" {
   memory_size      = 128
   
   vpc_config {
-    subnet_ids = data.aws_subnets.subnets
+    subnet_ids = data.aws_subnets.subnets.ids
     security_group_ids = [data.aws_security_group.rds_sg.id]
   }
 
