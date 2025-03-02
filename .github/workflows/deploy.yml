@@ -76,7 +76,7 @@ jobs:
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
             AWS_EC2_METADATA_DISABLED: "true" 
-          run: terraform plan -var="TAGS=${{ secrets.TAGS }}" -var="NOME=${{ secrets.NOMEPROJETO }}" -var="DB_PASSWORD=${{ secrets.DB_PASSWORD }}" -var="DB_USER=${{ secrets.DB_USER }} -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
+          run: terraform plan -var="TAGS=${{ secrets.TAGS }}" -var="NOME=${{ secrets.NOMEPROJETO }}" -var="DB_PASSWORD=${{ secrets.DB_PASSWORD }}" -var="DB_USER=${{ secrets.DB_USER }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
   
         - name: Aplicar o Terraform
           env:
@@ -84,7 +84,7 @@ jobs:
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
             AWS_EC2_METADATA_DISABLED: "true" 
-          run: terraform apply -var="TAGS=${{ secrets.TAGS }}" -var="NOME=${{ secrets.NOMEPROJETO }}" -var="DB_PASSWORD=${{ secrets.DB_PASSWORD }}" -var="DB_USER=${{ secrets.DB_USER }} -var="SECRET_KEY=${{ secrets.SECRET_KEY }}" -auto-approve
+          run: terraform apply -var="TAGS=${{ secrets.TAGS }}" -var="NOME=${{ secrets.NOMEPROJETO }}" -var="DB_PASSWORD=${{ secrets.DB_PASSWORD }}" -var="DB_USER=${{ secrets.DB_USER }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}" -auto-approve
   
 
       
