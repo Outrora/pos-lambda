@@ -19,6 +19,7 @@ resource "aws_lambda_function" "usuario_api" {
       DB_HOST     = data.aws_db_instance.pos_lanchonete.address
       DB_NAME     = var.NOME
       DB_PASSWORD = var.DB_PASSWORD
+      SECRET_KEY  = var.SECRET_KEY
     }
   }
 }
