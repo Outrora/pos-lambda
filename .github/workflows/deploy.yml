@@ -35,6 +35,13 @@ jobs:
                 cd projeto
                 zip -r ../lambda.zip .
 
+            - name: Upload artifact
+              uses: actions/upload-artifact@v3
+              with:
+                name: lambda-zip
+                path: lambda.zip
+            
+
     terraform:
       name: Deploy da Infra com Terraform
       runs-on: ubuntu-latest
@@ -43,10 +50,17 @@ jobs:
       steps:
         - name: Checkout do repositório
           uses: actions/checkout@v3
+
+        - name: Download artifact
+          uses: actions/download-artifact@v3
+          with:
+            name: lambda-zip
+
         - name: Configurar o Terraform
           uses: hashicorp/setup-terraform@v2
           with:
             terraform_version: 1.5.6
+
   
         - name: Configurar credenciais da AWS
           env:
