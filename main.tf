@@ -9,7 +9,7 @@ resource "aws_lambda_function" "usuario_api" {
   memory_size      = 128
   
   vpc_config {
-    subnet_ids = data.aws_subnets.subnets
+    subnet_ids = data.aws_subnets.subnets.ids
     security_group_ids = [data.aws_security_group.rds_sg.id]
   }
 
@@ -19,6 +19,7 @@ resource "aws_lambda_function" "usuario_api" {
       DB_HOST     = data.aws_db_instance.pos_lanchonete.address
       DB_NAME     = var.NOME
       DB_PASSWORD = var.DB_PASSWORD
+      SECRET_KEY  = var.SECRET_KEY
     }
   }
 }

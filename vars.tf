@@ -26,3 +26,5 @@ variable "TAGS" {}
 variable "DB_USER" {}
 
 variable "DB_PASSWORD" {}
+
+variable "SECRET_KEY" {}
