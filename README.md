@@ -8,7 +8,7 @@ Esse e um projeto do Tech Challenge fiap, sobre uma uma lanchonete de bairro que
 
 Este repositório contém a configuração de infraestrutura como código para o projeto `Lambda e Api Gateware`, utilizando o Terraform para gerenciar e provisionar recursos em nuvem AWS.
 
-## Tecnologias Utilizadas
+## 🚀 Tecnologias Utilizadas
 
 - **Lambda**: Javascript
 - **Infrastrutura**: Terraform
@@ -25,7 +25,7 @@ Este repositório contém a configuração de infraestrutura como código para o
 - **`apiGateway.tf`**: Configura o API Gateway para gerenciar as solicitações HTTP.
 
 
-## Pré-requisitos
+## ⚙️ Pré-requisitos
 
 - [Terraform](https://www.terraform.io/downloads.html) instalado na máquina local.
 - Conta ativa no provedor de nuvem aws.
