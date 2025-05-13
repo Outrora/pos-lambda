@@ -133,6 +133,10 @@ resource "aws_api_gateway_method" "cozinha_produtos_get_method" {
   resource_id   = aws_api_gateway_resource.cozinha_produtos_id_resource.id
   http_method   = "GET"
   authorization = "NONE"
+
+ request_parameters = {
+    "method.request.path.id" = true
+  }
 }
 
 resource "aws_api_gateway_integration" "cozinha_produtos_get_integration" {
@@ -143,6 +147,9 @@ resource "aws_api_gateway_integration" "cozinha_produtos_get_integration" {
   integration_http_method = "GET"
   type                    = "HTTP_PROXY"
   uri                     = "http://${data.kubernetes_service.cozinha_service.status.0.load_balancer.0.ingress.0.hostname}/produto/{id}"
+   request_parameters = {
+    "integration.request.path.id" = "method.request.path.id"
+  }
 }
 
 
@@ -153,6 +160,9 @@ resource "aws_api_gateway_method" "cozinha_produtos_put_method" {
   resource_id   = aws_api_gateway_resource.cozinha_produtos_id_resource.id
   http_method   = "PUT"
   authorization = "NONE"
+   request_parameters = {
+    "method.request.path.id" = true
+  }
 
 }
 
@@ -164,6 +174,9 @@ resource "aws_api_gateway_integration" "cozinha_produtos_put_integration" {
   integration_http_method = "PUT"
   type                    = "HTTP_PROXY"
   uri                     = "http://${data.kubernetes_service.cozinha_service.status.0.load_balancer.0.ingress.0.hostname}/produto/{id}"
+   request_parameters = {
+    "integration.request.path.id" = "method.request.path.id"
+  }
 }
 
 # DELETE
@@ -172,6 +185,9 @@ resource "aws_api_gateway_method" "cozinha_produtos_delete_method" {
   resource_id   = aws_api_gateway_resource.cozinha_produtos_id_resource.id
   http_method   = "DELETE"
   authorization = "NONE"
+   request_parameters = {
+    "method.request.path.id" = true
+  }
   
 }
 
@@ -183,4 +199,49 @@ resource "aws_api_gateway_integration" "cozinha_produtos_delete_integration" {
   integration_http_method = "DELETE"
   type                    = "HTTP_PROXY"
   uri                     = "http://${data.kubernetes_service.cozinha_service.status.0.load_balancer.0.ingress.0.hostname}/produto/{id}"
+     request_parameters = {
+    "integration.request.path.id" = "method.request.path.id"
+  }
+}
+
+
+# _______________________ Fim Produtos _______________________
+# _______________________ Pedido _______________________
+resource "aws_api_gateway_resource" "cozinha_pedido_resource" {
+  rest_api_id = aws_api_gateway_rest_api.eks_api.id
+  parent_id   = aws_api_gateway_resource.cozinha_resource.id
+  path_part   = "pedidos"
+}
+
+
+# /cozinha/pedidos/{id}
+resource "aws_api_gateway_resource" "cozinha_pedidos_id_resource" {
+  rest_api_id = aws_api_gateway_rest_api.eks_api.id
+  parent_id   = aws_api_gateway_resource.cozinha_pedido_resource.id
+  path_part   = "{id}"
+}
+
+# GET
+resource "aws_api_gateway_method" "cozinha_pedidos_put_method" {
+  rest_api_id   = aws_api_gateway_rest_api.eks_api.id
+  resource_id   = aws_api_gateway_resource.cozinha_pedidos_id_resource.id
+  http_method   = "PUT"
+  authorization = "NONE"
+
+ request_parameters = {
+    "method.request.path.id" = true
+  }
+}
+
+resource "aws_api_gateway_integration" "cozinha_pedidos_put_integration" {
+  depends_on = [data.kubernetes_service.cozinha_service]
+  rest_api_id             = aws_api_gateway_rest_api.eks_api.id
+  resource_id             = aws_api_gateway_resource.cozinha_pedidos_id_resource.id
+  http_method             = aws_api_gateway_method.cozinha_pedidos_put_method.http_method
+  integration_http_method = "PUT"
+  type                    = "HTTP_PROXY"
+  uri                     = "http://${data.kubernetes_service.cozinha_service.status.0.load_balancer.0.ingress.0.hostname}/pedido/estado/{id}"
+   request_parameters = {
+    "integration.request.path.id" = "method.request.path.id"
+  }
 }
