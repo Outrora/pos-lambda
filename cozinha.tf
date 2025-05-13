@@ -77,6 +77,49 @@ resource "aws_api_gateway_resource" "cozinha_produtos_resource" {
   path_part   = "produtos"
 }
 
+# POST
+resource "aws_api_gateway_method" "cozinha_produtos_post_method" {
+  rest_api_id   = aws_api_gateway_rest_api.eks_api.id
+  resource_id   = aws_api_gateway_resource.cozinha_produtos_resource.id
+  http_method   = "POST"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_integration" "cozinha_produtos_post_integration" {
+  depends_on = [data.kubernetes_service.cozinha_service]
+  rest_api_id             = aws_api_gateway_rest_api.eks_api.id
+  resource_id             = aws_api_gateway_resource.cozinha_produtos_resource.id
+  http_method             = aws_api_gateway_method.cozinha_produtos_post_method.http_method
+  integration_http_method = "POST"
+  type                    = "HTTP_PROXY"
+  uri                     = "http://${data.kubernetes_service.cozinha_service.status.0.load_balancer.0.ingress.0.hostname}/produto"
+}
+
+# Recurso para /cozinha/produtos/listar
+resource "aws_api_gateway_resource" "cozinha_produtos_listar_resource" {
+  rest_api_id = aws_api_gateway_rest_api.eks_api.id
+  parent_id   = aws_api_gateway_resource.cozinha_produtos_resource.id
+  path_part   = "listar"
+}
+
+# POST
+resource "aws_api_gateway_method" "cozinha_produtos_listar_method" {
+  rest_api_id   = aws_api_gateway_rest_api.eks_api.id
+  resource_id   = aws_api_gateway_resource.cozinha_produtos_listar_resource.id
+  http_method   = "GET"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_integration" "cozinha_produtos_listar_integration" {
+  depends_on = [data.kubernetes_service.cozinha_service]
+  rest_api_id             = aws_api_gateway_rest_api.eks_api.id
+  resource_id             = aws_api_gateway_resource.cozinha_produtos_listar_resource.id
+  http_method             = aws_api_gateway_method.cozinha_produtos_listar_method.http_method
+  integration_http_method = "GET"
+  type                    = "HTTP_PROXY"
+  uri                     = "http://${data.kubernetes_service.cozinha_service.status.0.load_balancer.0.ingress.0.hostname}/produto/listar"
+}
+
 # /cozinha/produtos/{id}
 resource "aws_api_gateway_resource" "cozinha_produtos_id_resource" {
   rest_api_id = aws_api_gateway_rest_api.eks_api.id
@@ -99,26 +142,10 @@ resource "aws_api_gateway_integration" "cozinha_produtos_get_integration" {
   http_method             = aws_api_gateway_method.cozinha_produtos_get_method.http_method
   integration_http_method = "GET"
   type                    = "HTTP_PROXY"
-  uri                     = "http://${data.kubernetes_service.cozinha_service.status.0.load_balancer.0.ingress.0.hostname}/produtos/{id}"
+  uri                     = "http://${data.kubernetes_service.cozinha_service.status.0.load_balancer.0.ingress.0.hostname}/produto/{id}"
 }
 
-# POST
-resource "aws_api_gateway_method" "cozinha_produtos_post_method" {
-  rest_api_id   = aws_api_gateway_rest_api.eks_api.id
-  resource_id   = aws_api_gateway_resource.cozinha_produtos_resource.id
-  http_method   = "POST"
-  authorization = "NONE"
-}
 
-resource "aws_api_gateway_integration" "cozinha_produtos_post_integration" {
-  depends_on = [data.kubernetes_service.cozinha_service]
-  rest_api_id             = aws_api_gateway_rest_api.eks_api.id
-  resource_id             = aws_api_gateway_resource.cozinha_produtos_resource.id
-  http_method             = aws_api_gateway_method.cozinha_produtos_post_method.http_method
-  integration_http_method = "POST"
-  type                    = "HTTP_PROXY"
-  uri                     = "http://${data.kubernetes_service.cozinha_service.status.0.load_balancer.0.ingress.0.hostname}/produtos"
-}
 
 # PUT
 resource "aws_api_gateway_method" "cozinha_produtos_put_method" {
@@ -136,7 +163,7 @@ resource "aws_api_gateway_integration" "cozinha_produtos_put_integration" {
   http_method             = aws_api_gateway_method.cozinha_produtos_put_method.http_method
   integration_http_method = "PUT"
   type                    = "HTTP_PROXY"
-  uri                     = "http://${data.kubernetes_service.cozinha_service.status.0.load_balancer.0.ingress.0.hostname}/produtos/{id}"
+  uri                     = "http://${data.kubernetes_service.cozinha_service.status.0.load_balancer.0.ingress.0.hostname}/produto/{id}"
 }
 
 # DELETE
@@ -155,5 +182,5 @@ resource "aws_api_gateway_integration" "cozinha_produtos_delete_integration" {
   http_method             = aws_api_gateway_method.cozinha_produtos_delete_method.http_method
   integration_http_method = "DELETE"
   type                    = "HTTP_PROXY"
-  uri                     = "http://${data.kubernetes_service.cozinha_service.status.0.load_balancer.0.ingress.0.hostname}/produtos/{id}"
+  uri                     = "http://${data.kubernetes_service.cozinha_service.status.0.load_balancer.0.ingress.0.hostname}/produto/{id}"
 }
