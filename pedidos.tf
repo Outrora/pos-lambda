@@ -78,13 +78,13 @@ resource "aws_api_gateway_method" "pedido_method_put" {
 resource "aws_api_gateway_integration" "pedido_integration_put" {
    depends_on = [data.kubernetes_service.pedido_service]
   rest_api_id             = aws_api_gateway_rest_api.eks_api.id
-  resource_id             = aws_api_gateway_resource.pedido_resource.id
-  http_method             = aws_api_gateway_method.pedido_method.http_method
+  resource_id             = aws_api_gateway_resource.pedido_resource_id.id
+  http_method             = aws_api_gateway_method.pedido_method_put.http_method
   integration_http_method = "PUT"
   type                    = "HTTP_PROXY"
   uri                     = "http://${data.kubernetes_service.pedido_service.status.0.load_balancer.0.ingress.0.hostname}/pedido/alterarEstado/{id}"
 
-  request_parameters = {
+   request_parameters = {
     "integration.request.path.id" = "method.request.path.id"
   }
 }
@@ -155,7 +155,7 @@ resource "aws_api_gateway_integration" "pagamento_integration_put" {
   type                    = "HTTP_PROXY"
   uri                     = "http://${data.kubernetes_service.pedido_service.status.0.load_balancer.0.ingress.0.hostname}/pedido/{id}"
 
-   request_parameters = {
+    request_parameters = {
     "integration.request.path.id" = "method.request.path.id"
   }
 
