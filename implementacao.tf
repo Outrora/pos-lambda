@@ -9,7 +9,8 @@ resource "aws_api_gateway_deployment" "eks_api_deployment" {
     aws_api_gateway_integration.cozinha_produtos_put_integration,
     aws_api_gateway_integration.cozinha_produtos_delete_integration,
     aws_api_gateway_integration.cozinha_fila_preparacao_integration,
-    aws_api_gateway_integration.cozinha_produtos_listar_integration
+    aws_api_gateway_integration.cozinha_produtos_listar_integration,
+    aws_api_gateway_integration.cozinha_pedidos_put_integration
   ]
   
   rest_api_id = aws_api_gateway_rest_api.eks_api.id
@@ -40,6 +41,12 @@ resource "aws_api_gateway_deployment" "eks_api_deployment" {
     aws_api_gateway_resource.cozinha_produtos_listar_resource.id,
     aws_api_gateway_method.cozinha_produtos_listar_method.id,
     aws_api_gateway_integration.cozinha_produtos_listar_integration.id,
+    aws_api_gateway_resource.cozinha_pedido_resource.id,
+    aws_api_gateway_resource.cozinha_pedidos_id_resource.id,
+    aws_api_gateway_method.cozinha_pedidos_put_method.id,
+    aws_api_gateway_integration.cozinha_pedidos_put_integration.id,
+
+    
     ]))
   }
 
