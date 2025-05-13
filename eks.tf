@@ -24,6 +24,7 @@ resource "aws_api_gateway_method" "cliente_method" {
 
 # Integração usando o endereço do Load Balancer existente para cliente
 resource "aws_api_gateway_integration" "cliente_integration" {
+  depends_on = [data.kubernetes_service.cliente_service]
   rest_api_id             = aws_api_gateway_rest_api.eks_api.id
   resource_id             = aws_api_gateway_resource.cliente_resource.id
   http_method             = aws_api_gateway_method.cliente_method.http_method
@@ -49,6 +50,7 @@ resource "aws_api_gateway_method" "pedido_method" {
 
 # Integração usando o endereço do Load Balancer existente para pedido
 resource "aws_api_gateway_integration" "pedido_integration" {
+   depends_on = [data.kubernetes_service.pedido_service]
   rest_api_id             = aws_api_gateway_rest_api.eks_api.id
   resource_id             = aws_api_gateway_resource.pedido_resource.id
   http_method             = aws_api_gateway_method.pedido_method.http_method
@@ -74,6 +76,7 @@ resource "aws_api_gateway_method" "cozinha_method" {
 
 # Integração usando o endereço do Load Balancer existente para cozinha
 resource "aws_api_gateway_integration" "cozinha_integration" {
+  depends_on = [data.kubernetes_service.cozinha_service]
   rest_api_id             = aws_api_gateway_rest_api.eks_api.id
   resource_id             = aws_api_gateway_resource.cozinha_resource.id
   http_method             = aws_api_gateway_method.cozinha_method.http_method
@@ -115,7 +118,7 @@ resource "aws_api_gateway_deployment" "eks_api_deployment" {
 resource "aws_api_gateway_stage" "eks_api_stage" {
   deployment_id = aws_api_gateway_deployment.eks_api_deployment.id
   rest_api_id   = aws_api_gateway_rest_api.eks_api.id
-  stage_name    = "prod"
+  stage_name    = "hm"
 }
 
 # Outputs dos endpoints
