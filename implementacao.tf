@@ -3,8 +3,12 @@ resource "aws_api_gateway_deployment" "eks_api_deployment" {
   depends_on = [
     aws_api_gateway_integration.cliente_integration,
     aws_api_gateway_integration.pedido_integration,
-    aws_api_gateway_integration.cozinha_integration,
-    aws_api_gateway_integration.cozinha_fila_atual_integration
+    aws_api_gateway_integration.cozinha_fila_atual_integration,
+    aws_api_gateway_integration.cozinha_produtos_get_integration,
+    aws_api_gateway_integration.cozinha_produtos_post_integration,
+    aws_api_gateway_integration.cozinha_produtos_put_integration,
+    aws_api_gateway_integration.cozinha_produtos_delete_integration,
+    aws_api_gateway_integration.cozinha_fila_preparacao_integration,
   ]
   
   rest_api_id = aws_api_gateway_rest_api.eks_api.id
@@ -17,12 +21,20 @@ resource "aws_api_gateway_deployment" "eks_api_deployment" {
       aws_api_gateway_resource.pedido_resource.id,
       aws_api_gateway_method.pedido_method.id,
       aws_api_gateway_integration.pedido_integration.id,
-      aws_api_gateway_resource.cozinha_resource.id,
-      aws_api_gateway_method.cozinha_method.id,
-      aws_api_gateway_integration.cozinha_integration.id,
       aws_api_gateway_resource.cozinha_fila_atual_resource.id,
       aws_api_gateway_method.cozinha_fila_atual_method.id,
-      aws_api_gateway_integration.cozinha_fila_atual_integration.id
+      aws_api_gateway_integration.cozinha_fila_atual_integration.id,
+      aws_api_gateway_resource.cozinha_produtos_resource.id,
+      aws_api_gateway_method.cozinha_produtos_get_method.id,
+    aws_api_gateway_integration.cozinha_produtos_get_integration.id,
+    aws_api_gateway_method.cozinha_produtos_post_method.id,
+    aws_api_gateway_integration.cozinha_produtos_post_integration.id,
+    aws_api_gateway_method.cozinha_produtos_put_method.id,
+    aws_api_gateway_integration.cozinha_produtos_put_integration.id,
+    aws_api_gateway_method.cozinha_produtos_delete_method.id,
+    aws_api_gateway_integration.cozinha_produtos_delete_integration.id,
+    aws_api_gateway_method.cozinha_fila_preparacao_method.id,
+    aws_api_gateway_integration.cozinha_fila_preparacao_integration.id,
     ]))
   }
 
