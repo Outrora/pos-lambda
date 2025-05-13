@@ -33,19 +33,3 @@ resource "aws_lambda_permission" "api_gateway_invoker" {
   source_arn    = "${aws_api_gateway_rest_api.usuario_api.execution_arn}/*/*"
 }
 
-resource "aws_api_gateway_deployment" "api_deployment" {
-  rest_api_id = aws_api_gateway_rest_api.usuario_api.id
-  triggers = {
-    redeployment = sha1(jsonencode(aws_api_gateway_rest_api.usuario_api))
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-resource "aws_api_gateway_stage" "hm" {
-  stage_name    = "hm"
-  rest_api_id   = aws_api_gateway_rest_api.usuario_api.id
-  deployment_id = aws_api_gateway_deployment.api_deployment.id
-}
