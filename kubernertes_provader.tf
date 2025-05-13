@@ -48,3 +48,12 @@ output "pedido_load_balancer" {
 output "cozinha_load_balancer" {
   value = data.kubernetes_service.cozinha_service.status.0.load_balancer.0.ingress.0.hostname
 }
+
+resource "aws_api_gateway_rest_api" "eks_api" {
+  name        = "${var.NOME}-eks-api"
+  description = "API Gateway para integração com serviços EKS existentes"
+
+  endpoint_configuration {
+    types = ["REGIONAL"]
+  }
+}
