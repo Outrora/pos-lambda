@@ -16,8 +16,8 @@ resource "aws_lambda_function" "usuario_api" {
   environment {
     variables = {
       DB_USER     = var.DB_USER
-      DB_HOST     = data.aws_db_instance.pos_lanchonete.address
-      DB_NAME     = var.NOME
+      DB_HOST     = data.aws_db_instance.pos-lanchonete-cliente.address
+      DB_NAME     = "cliente"
       DB_PASSWORD = var.DB_PASSWORD
       SECRET_KEY  = var.SECRET_KEY
     }
