@@ -260,8 +260,3 @@ resource "aws_api_gateway_stage" "lanchonete_api_stage" {
   rest_api_id   = aws_api_gateway_rest_api.lanchonete_api.id
   stage_name    = "v1"
 }
-
-# Output the API Gateway URL
-output "api_gateway_url" {
-  value = "https://${aws_api_gateway_rest_api.lanchonete_api.id}.execute-api.${var.regionDefault}.amazonaws.com/${aws_api_gateway_stage.lanchonete_api_stage.stage_name}"
-}
