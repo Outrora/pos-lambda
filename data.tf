@@ -17,8 +17,8 @@ data "aws_subnets" "subnets"{
     }
 }
 
-data "aws_db_instance" "pos_lanchonete" {
-  db_instance_identifier = "${var.NOME}-db"
+data "aws_db_instance" "pos-lanchonete-cliente" {
+  db_instance_identifier = "${var.NOME}-cliente"
 }
 
 data "aws_subnet" "subnet" {
